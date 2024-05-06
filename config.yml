@@ -7,7 +7,7 @@ genesis:
   app_state:
     staking:
       params:
-        bond_denom: ukii
+        bond_denom: tkii
 validators:
   - name: andresWallet
     bonded: 100000000000tkii

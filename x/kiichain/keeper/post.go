@@ -12,14 +12,14 @@ func (k Keeper) AppendPost(ctx sdk.Context, post types.Post) uint64 {
 	count := k.GetPostCount(ctx) // Return the current post in the BlockChain
 	post.Id = count
 	store := prefix.NewStore(ctx.KVStore(k.storeKey), types.KeyPrefix(types.PostKey))
-	appendedValue := k.cdc.MustMarshal(&post)
+	appendedValue := k.cdc.MustMarshal(&post)         // Serialyze the post to be stored
 	store.Set(GetPostIDBytes(post.Id), appendedValue) // Save the post into the BlockChain
 	k.SetPostCount(ctx, count+1)                      // Increment the post count in the blockchain
 	return count                                      // Return the ID of the created post
 }
 
 func (k Keeper) GetPostCount(ctx sdk.Context) uint64 {
-	store := prefix.NewStore(ctx.KVStore(k.storeKey), []byte{})
+	store := prefix.NewStore(ctx.KVStore(k.storeKey), []byte{}) // Create a store
 	byteKey := types.KeyPrefix(types.PostCountKey)
 	bz := store.Get(byteKey)
 	if bz == nil {
